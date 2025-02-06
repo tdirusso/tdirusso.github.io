@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Genesys Product Synergies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      padding-bottom: 100px;
+    }
+
+    header {
+      background: #23395d;
+      color: white;
+      height: 80px;
+
+      h1 {
+        margin: 0;
+        font-weight: 300;
+        font-size: 28px;
+        margin-top: 10px;
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0px 20px;
+      }
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 25px;
+    }
+
+    .tile-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+      margin-top: 30px;
+    }
+
+    .tile {
+      padding: 10px 25px;
+      border: 1px solid #ff4f1f;
+      color: #ff4f1f;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 250ms, color 250ms;
+    }
+
+    .tile.selected {
+      background-color: #ff4f1f;
+      color: white;
+    }
+
+    .section {
+      border-radius: 8px;
+      width: calc(50% - 50px);
+      min-height: 150px;
+      padding: 20px;
+      margin: 10px 0;
+      text-align: left;
+      box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    .section h3 {
+      margin: 0 0 10px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .section:last-child {
+      width: 100%;
+      flex-grow: 1;
+    }
+
+    .section-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    @media (max-width: 580px) {
+      header {
+        div {
+          justify-content: center;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div>
+      <img class="genesys-logo" height="75"
+        src="https://datacom.com/content/dam/logos/partner-client-logos/Genesys-logo-Reversed.png"
+        alt="Genesys.com logo">
+      <h1>Product Synergies
+      </h1>
+    </div>
+  </header>
+
+  <main>
+    <p>
+      This tool can help you understand how utilizing multiple Genesys products together can create synergistic effects
+      that drive specific business outcomes and target specific KPIs. Each combination is unique and may have different
+      use cases and ROI per customer.
+      <br><br>
+      To get started, choose any combination from the product boxes. A detailed report will appear below.
+    </p>
+
+    <div class="tile-container">
+      <div class="tile" data-tile="Copilot">Copilot</div>
+      <div class="tile" data-tile="GPE">GPE</div>
+      <div class="tile" data-tile="GPR">GPR</div>
+      <div class="tile" data-tile="Knowledge">Knowledge</div>
+      <div class="tile" data-tile="Messenger Widget">Messenger Widget</div>
+      <div class="tile" data-tile="Mobile">Mobile</div>
+      <div class="tile" data-tile="VA">VA</div>
+    </div>
+
+    <div class="section-container">
+      <div class="section" id="product-info">
+        <h3>Product Info/Synergies</h3>
+        <p id="product-info-text">Select products to view synergies.</p>
+      </div>
+      <div class="section" id="business-outcomes">
+        <h3>Business Outcomes</h3>
+        <p id="business-outcomes-text">Select products to view business outcomes.</p>
+      </div>
+      <div class="section" id="kpis-affected">
+        <h3>KPIs Affected</h3>
+        <p id="kpis-affected-text">Select products to view affected KPIs.</p>
+      </div>
+      <div class="section" id="roi">
+        <h3>ROI</h3>
+        <p id="roi-text">Select products to view ROI.</p>
+      </div>
+      <div class="section" id="orchestration">
+        <h3>Level of Orchestration</h3>
+        <p id="orchestration-text">Select products to view orchestration level.</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const tiles = document.querySelectorAll('.tile');
+    const productInfoText = document.getElementById('product-info-text');
+    const businessOutcomesText = document.getElementById('business-outcomes-text');
+    const kpisAffectedText = document.getElementById('kpis-affected-text');
+    const roiText = document.getElementById('roi-text');
+    const orchestrationText = document.getElementById('orchestration-text');
+
+    const combinations = {
+      "GPE+VA": {
+        productInfo: "Synergy between GPE and VA enhances process automation and customer engagement.<br><br>Synergy between GPE and VA enhances process automation and customer engagement.Synergy between GPE and VA enhances process automation and customer engagement.Synergy between GPE and VA enhances process automation and customer engagement.Synergy between GPE and VA enhances process automation and customer engagement.Synergy between GPE and VA enhances process automation and customer engagement.",
+        businessOutcomes: "Improved operational efficiency and customer satisfaction.",
+        kpis: "Reduced response times, increased NPS.",
+        roi: "High ROI due to reduced operational costs.",
+        orchestration: "Medium orchestration level required."
+      },
+      "GPE+VA+Copilot": {
+        productInfo: "Adding Copilot to GPE and VA introduces advanced automation and real-time insights.",
+        businessOutcomes: "Higher customer retention and quicker resolution times.",
+        kpis: "Increased CSAT and agent productivity.",
+        roi: "Significant ROI due to enhanced efficiency.",
+        orchestration: "High orchestration level required."
+      }
+    };
+
+    tiles.forEach(tile => {
+      tile.addEventListener('click', () => {
+        tile.classList.toggle('selected');
+        updateSections();
+      });
+    });
+
+    function updateSections() {
+      const selectedTiles = Array.from(tiles)
+        .filter(tile => tile.classList.contains('selected'))
+        .map(tile => tile.getAttribute('data-tile'))
+        .sort();
+
+      const selectedKey = Object.keys(combinations).find(key => {
+        const keyParts = key.split('+').sort();
+        return JSON.stringify(keyParts) === JSON.stringify(selectedTiles);
+      });
+
+      if (selectedKey) {
+        const data = combinations[selectedKey];
+        productInfoText.innerHTML = data.productInfo;
+        businessOutcomesText.innerHTML = data.businessOutcomes;
+        kpisAffectedText.innerHTML = data.kpis;
+        roiText.innerHTML = data.roi;
+        orchestrationText.innerHTML = data.orchestration;
+      } else {
+        productInfoText.textContent = "Select products to view synergies.";
+        businessOutcomesText.textContent = "Select products to view business outcomes.";
+        kpisAffectedText.textContent = "Select products to view affected KPIs.";
+        roiText.textContent = "Select products to view ROI.";
+        orchestrationText.textContent = "Select products to view orchestration level.";
+      }
+    }
+  </script>
+</body>
+
+</html>
