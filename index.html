@@ -10,9 +10,14 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap"
     rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/favicon.png">
+
   <style>
-    body {
+    * {
       box-sizing: border-box;
+    }
+
+    body {
       margin: 0;
       font-family: 'Roboto', Arial, sans-serif;
       padding-bottom: 100px;
@@ -37,6 +42,7 @@
         max-width: 1200px;
         margin: 0 auto;
         padding: 0px 20px;
+        padding-top: 15px;
       }
     }
 
@@ -55,12 +61,14 @@
     }
 
     .tile {
-      padding: 10px 25px;
+      padding: 15px;
       border: 1px solid #ff4f1f;
       color: #ff4f1f;
       border-radius: 5px;
       cursor: pointer;
       transition: background 250ms, color 250ms;
+      white-space: nowrap;
+      text-align: center;
     }
 
     .tile.selected {
@@ -106,15 +114,29 @@
         }
       }
     }
+
+    @media (max-width: 440px) {
+      header {
+        div {
+          padding-top: 0;
+        }
+      }
+
+      .tile-container {
+        justify-content: center;
+      }
+
+      .section {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 
 <body>
   <header>
     <div>
-      <img class="genesys-logo" height="75"
-        src="https://datacom.com/content/dam/logos/partner-client-logos/Genesys-logo-Reversed.png"
-        alt="Genesys.com logo">
+      <img class="genesys-logo" height="32" src="./logo.png" alt="Genesys.com logo">
       <h1>Product Synergies
       </h1>
     </div>
@@ -221,6 +243,22 @@
         orchestrationText.textContent = "Select products to view orchestration level.";
       }
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const tiles = document.querySelectorAll(".tile");
+      let maxWidth = 0;
+
+      tiles.forEach(tile => {
+        const width = tile.offsetWidth;
+        if (width > maxWidth) {
+          maxWidth = width;
+        }
+      });
+
+      tiles.forEach(tile => {
+        tile.style.width = `${maxWidth}px`;
+      });
+    });
   </script>
 </body>
 
