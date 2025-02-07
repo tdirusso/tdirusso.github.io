@@ -152,13 +152,15 @@
     </p>
 
     <div class="tile-container">
-      <div class="tile" data-tile="Copilot">Copilot</div>
-      <div class="tile" data-tile="GPE">GPE</div>
-      <div class="tile" data-tile="GPR">GPR</div>
+      <div class="tile" data-tile="Speech and Text Analytics">Speech and Text Analytics</div>
+      <div class="tile" data-tile="Genesys Predictive Engagement">Genesys Predictive Engagement</div>
+      <div class="tile" data-tile="Automation">Automation</div>
+      <div class="tile" data-tile="Bots and Virtual Agents">Bots and Virtual Agents</div>
       <div class="tile" data-tile="Knowledge">Knowledge</div>
-      <div class="tile" data-tile="Messenger Widget">Messenger Widget</div>
-      <div class="tile" data-tile="Mobile">Mobile</div>
-      <div class="tile" data-tile="VA">VA</div>
+      <div class="tile" data-tile="Genesys Predictive Routing">Genesys Predictive Routing</div>
+      <div class="tile" data-tile="Genesys Agent Copilot">Genesys Agent Copilot</div>
+      <div class="tile" data-tile="Topics">Topics</div>
+      <div class="tile" data-tile="Journey Management">Journey Management</div>
     </div>
 
     <div class="section-container">
@@ -193,22 +195,26 @@
     const roiText = document.getElementById('roi-text');
     const orchestrationText = document.getElementById('orchestration-text');
 
-    const combinations = {
-      "GPE+VA": {
-        productInfo: "Synergy between GPE and VA enhances process automation and customer engagement.<br><br>Synergy between GPE and VA enhances process automation and customer engagement.Synergy between GPE and VA enhances process automation and customer engagement.Synergy between GPE and VA enhances process automation and customer engagement.Synergy between GPE and VA enhances process automation and customer engagement.Synergy between GPE and VA enhances process automation and customer engagement.",
-        businessOutcomes: "Improved operational efficiency and customer satisfaction.",
-        kpis: "Reduced response times, increased NPS.",
-        roi: "High ROI due to reduced operational costs.",
-        orchestration: "Medium orchestration level required."
-      },
-      "GPE+VA+Copilot": {
-        productInfo: "Adding Copilot to GPE and VA introduces advanced automation and real-time insights.",
-        businessOutcomes: "Higher customer retention and quicker resolution times.",
-        kpis: "Increased CSAT and agent productivity.",
-        roi: "Significant ROI due to enhanced efficiency.",
-        orchestration: "High orchestration level required."
-      }
-    };
+    let combinations = {};
+
+    async function loadCSV() {
+      const response = await fetch('data.csv'); // Replace 'data.csv' with your CSV file name
+      const csvText = await response.text();
+      const rows = csvText.split('\n');
+      const headers = rows[0].split(',');
+
+      rows.slice(1).forEach(row => {
+        const values = row.match(/(?:"[^"]*")|[^,]+/g).map(value => value.replace(/"/g, '').trim());
+        const combinationKey = values[0].split(',').map(item => item.trim()).sort().join('+');
+        combinations[combinationKey] = {
+          productInfo: values[1],
+          businessOutcomes: values[2],
+          kpis: values[3],
+          roi: values[4],
+          orchestration: values[5]
+        };
+      });
+    }
 
     tiles.forEach(tile => {
       tile.addEventListener('click', () => {
@@ -223,10 +229,7 @@
         .map(tile => tile.getAttribute('data-tile'))
         .sort();
 
-      const selectedKey = Object.keys(combinations).find(key => {
-        const keyParts = key.split('+').sort();
-        return JSON.stringify(keyParts) === JSON.stringify(selectedTiles);
-      });
+      const selectedKey = selectedTiles.join('+');
 
       if (selectedKey) {
         const data = combinations[selectedKey];
@@ -259,6 +262,8 @@
         tile.style.width = `${maxWidth}px`;
       });
     });
+
+    window.onload = loadCSV;
   </script>
 </body>
 
