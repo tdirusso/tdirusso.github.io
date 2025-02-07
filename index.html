@@ -78,7 +78,7 @@
 
     .section {
       border-radius: 8px;
-      width: calc(50% - 50px);
+      width: calc(50% - 10px);
       min-height: 150px;
       padding: 20px;
       margin: 10px 0;
@@ -211,10 +211,17 @@
           businessOutcomes: values[2],
           kpis: values[3],
           roi: values[4],
-          orchestration: values[5]
+          orchestration: getHighestOrchestrationLevel(values[5])
         };
       });
     }
+
+    function getHighestOrchestrationLevel(orchestration) {
+      const levels = orchestration.split(',').map(level => level.trim());
+      levels.sort((a, b) => parseInt(b.match(/\d+/)) - parseInt(a.match(/\d+/)));
+      return levels[0];
+    }
+
 
     tiles.forEach(tile => {
       tile.addEventListener('click', () => {
